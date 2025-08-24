@@ -2,16 +2,13 @@ package com.lalumen.backend.entity;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @Getter
@@ -39,11 +36,16 @@ public class Work {
 
     private Date deletedAt;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "accountId", referencedColumnName = "accountId")
+    @JsonIgnore
     private Account account;
 
-    public Work(Date workDate, Time timeStart, String logTitle, String logDescription, float productivityRating, Date lastModifiedAt, boolean isDeleted, Date deletedAt, Account account) {
+    @ManyToMany
+    @JoinTable(name = "workCategories", joinColumns = @JoinColumn(name = "workId"), inverseJoinColumns = @JoinColumn(name = "categoryId"))
+    private List<Category> workCategories = new ArrayList<>();
+
+    public Work(Date workDate, Time timeStart, String logTitle, String logDescription, float productivityRating, Date lastModifiedAt, boolean isDeleted, Date deletedAt) {
         this.workDate = workDate;
         this.timeStart = timeStart;
         this.logTitle = logTitle;
@@ -52,6 +54,9 @@ public class Work {
         this.lastModifiedAt = lastModifiedAt;
         this.isDeleted = isDeleted;
         this.deletedAt = deletedAt;
-        this.account = account;
+    }
+
+    public void addWorkCategory(Category category) {
+        this.workCategories.add(category);
     }
 }

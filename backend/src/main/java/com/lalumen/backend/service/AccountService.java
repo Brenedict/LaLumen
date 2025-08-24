@@ -14,16 +14,11 @@ public class AccountService {
     @Autowired
     AccountRepository repository;
 
-    public Account postAccount(Account account) {
-        account.setAccountId(0);
-        return repository.save(account);
-    }
-
     public List<Account> getAccounts() {
         return repository.findAll();
     }
 
-    public Account getAccount(int id) {
+    public Account getAccountById(int id) {
         Optional<Account> account = repository.findById(id);
 
         if(!account.isPresent()) {
@@ -32,4 +27,10 @@ public class AccountService {
 
         return account.get();
     }
+
+    public Account postAccount(Account account) {
+        account.setAccountId(0);
+        return repository.save(account);
+    }
+
 }
