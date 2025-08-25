@@ -5,7 +5,10 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -36,13 +39,14 @@ public class Work {
 
     private Date deletedAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "accountId", referencedColumnName = "accountId")
     @JsonIgnore
     private Account account;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(name = "workCategories", joinColumns = @JoinColumn(name = "workId"), inverseJoinColumns = @JoinColumn(name = "categoryId"))
+    @JsonManagedReference
     private List<Category> workCategories = new ArrayList<>();
 
     public Work(Date workDate, Time timeStart, String logTitle, String logDescription, float productivityRating, Date lastModifiedAt, boolean isDeleted, Date deletedAt) {
@@ -58,5 +62,12 @@ public class Work {
 
     public void addWorkCategory(Category category) {
         this.workCategories.add(category);
+    }
+
+    @PreRemove
+    public void beforeDelete() {
+        for(Category category : workCategories) {
+            category.getWorks().remove(this);
+        }
     }
 }

@@ -63,8 +63,14 @@ public class WorkService {
         
         Optional<Work> tempWork = repository.findById(workId);
 
+        // Add error checking
+
         Work work = tempWork.get();
 
         work.addWorkCategory(tempCategory.get());
+    }
+    
+    public void deleteWork(int id) {
+        repository.deleteById(id);
     }
 }

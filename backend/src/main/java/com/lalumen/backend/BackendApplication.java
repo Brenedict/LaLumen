@@ -14,6 +14,7 @@ import com.lalumen.backend.entity.Work;
 import com.lalumen.backend.repository.AccountRepository;
 import com.lalumen.backend.repository.CategoryRepository;
 import com.lalumen.backend.repository.WorkRepository;
+import com.lalumen.backend.service.CategoryService;
 import com.lalumen.backend.service.WorkService;
 
 @SpringBootApplication
@@ -30,6 +31,9 @@ public class BackendApplication implements CommandLineRunner {
 
 	@Autowired
 	CategoryRepository catRepo;
+
+	@Autowired
+	CategoryService catService;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(BackendApplication.class, args);
@@ -52,9 +56,17 @@ public class BackendApplication implements CommandLineRunner {
 		catRepo.save(new Category("DSA"));
 		catRepo.save(new Category("DAA"));
 
+		catService.addAccount(1, 1);
+		catService.addAccount(2, 2);
+		catService.addAccount(3, 1);
+		catService.addAccount(4, 2);
+
 		workService.addWorkCategory(1, 1);
 		workService.addWorkCategory(1, 2);
 		workService.addWorkCategory(1, 3);
 		workService.addWorkCategory(1, 4);
+
+		workService.addWorkCategory(2, 3);
+		workService.addWorkCategory(2, 4);
 	}
 }

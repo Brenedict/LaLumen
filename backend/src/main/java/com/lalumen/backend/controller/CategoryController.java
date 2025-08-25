@@ -1,14 +1,12 @@
 package com.lalumen.backend.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.lalumen.backend.entity.Category;
 import com.lalumen.backend.service.CategoryService;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -32,5 +30,10 @@ public class CategoryController {
     public Category postCategory(@RequestBody Category category) {
         return service.postCategory(category);
     }
-    
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCategory(@PathVariable int id) {
+        service.deleteCategory(id);
+        return ResponseEntity.noContent().build();
+    }
 }

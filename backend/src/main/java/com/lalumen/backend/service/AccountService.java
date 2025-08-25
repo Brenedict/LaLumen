@@ -33,4 +33,8 @@ public class AccountService {
         return repository.save(account);
     }
 
+    public void deleteAccount(int id) {
+        repository.deleteById(id);
+    }
+
 }

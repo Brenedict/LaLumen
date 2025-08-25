@@ -2,7 +2,9 @@ package com.lalumen.backend.controller;
 
 import java.util.List;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,7 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lalumen.backend.entity.Account;
 import com.lalumen.backend.service.AccountService;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -21,14 +26,36 @@ public class AccountController {
     AccountService service;
 
     @GetMapping
-    public List<Account> getAccounts() {
-        return service.getAccounts();
+    public ResponseEntity<List<Account>> getAccounts() {
+        List<Account> accounts = service.getAccounts();
+
+        if(accounts.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        
+        return ResponseEntity.ok(accounts);
     }
     
+    @GetMapping("/{id}")
+    public ResponseEntity<Account> getAccountById(@PathVariable int id) {
+        Account account = service.getAccountById(id);
+
+        if (account == null) {
+            return ResponseEntity.noContent().build();    
+        }
+
+        return ResponseEntity.ok(account);
+    }
 
     @PostMapping
     public Account postAccount(@RequestBody Account account) {
         return service.postAccount(account);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteAccount(@PathVariable int id) {
+        service.deleteAccount(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
