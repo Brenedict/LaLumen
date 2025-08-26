@@ -28,7 +28,7 @@ public class CategoryService {
         Optional<Category> category = repository.findById(id);
 
         if(!category.isPresent()) {
-            throw new RuntimeException("Category with id " + id + "not found");
+            throw new RuntimeException("Category with id " + id + " not found");
         }
 
         return category.get();

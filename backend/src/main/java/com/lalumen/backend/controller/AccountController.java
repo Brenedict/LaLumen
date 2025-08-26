@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lalumen.backend.entity.Account;
 import com.lalumen.backend.service.AccountService;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/account")
+@CrossOrigin("*")
 public class AccountController {
     @Autowired
     AccountService service;

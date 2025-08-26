@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lalumen.backend.entity.Account;
+import com.lalumen.backend.exception.AccountNotFoundException;
 import com.lalumen.backend.repository.AccountRepository;
 
 @Service
@@ -22,7 +23,7 @@ public class AccountService {
         Optional<Account> account = repository.findById(id);
 
         if(!account.isPresent()) {
-            throw new RuntimeException("Account with id " + id + "not found");
+            throw new AccountNotFoundException("Account with id " + id + " not found");
         }
 
         return account.get();
