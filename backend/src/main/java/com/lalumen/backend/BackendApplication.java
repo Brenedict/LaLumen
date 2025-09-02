@@ -2,7 +2,7 @@ package com.lalumen.backend;
 
 import java.sql.Date;
 import java.sql.Time;
-
+import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -14,11 +14,15 @@ import com.lalumen.backend.entity.Work;
 import com.lalumen.backend.repository.AccountRepository;
 import com.lalumen.backend.repository.CategoryRepository;
 import com.lalumen.backend.repository.WorkRepository;
+import com.lalumen.backend.service.AccountService;
 import com.lalumen.backend.service.CategoryService;
 import com.lalumen.backend.service.WorkService;
 
 @SpringBootApplication
 public class BackendApplication implements CommandLineRunner {
+
+    private final AccountService accountService;
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	AccountRepository accRepo;
@@ -34,6 +38,10 @@ public class BackendApplication implements CommandLineRunner {
 
 	@Autowired
 	CategoryService catService;
+
+    BackendApplication(AccountService accountService) {
+        this.accountService = accountService;
+    }
 	
 	public static void main(String[] args) {
 		SpringApplication.run(BackendApplication.class, args);
@@ -45,11 +53,20 @@ public class BackendApplication implements CommandLineRunner {
 		accRepo.save(new Account("Cactus", "Bomboclaat"));
 		accRepo.save(new Account("Shrimp", "HelloKalibutan"));
 
-		workRepo.save(new Work(new Date(2025,07,28), new Time(8,16,27), "Sample Title", "Sample Description", 4.5f, new Date(2025,07,28), false, new Date(2025,07,28)));
+		workRepo.save(new Work(new Date(2025,07,28), new Time(8,16,27), "Title 1 Acc 1", "Sample Description 1", 4.5f, new Date(2025,07,28), false, new Date(2025,07,28)));
 		workService.setAccount(1, 2);
 
 		workRepo.save(new Work(new Date(2023,01,12), new Time(4,4,4), "Sample SADASD", "asdasdas Description", 9.5f, new Date(2025,12,28), false, new Date(2025,1,28)));
 		workService.setAccount(2, 2);
+
+		workRepo.save(new Work(new Date(2025,07,28), new Time(8,16,27), "Title 2 Acc 1", "Sample Description 2", 4.6f, new Date(2025,07,28), true, new Date(2025,07,28)));
+		workService.setAccount(3, 1);
+
+		workRepo.save(new Work(new Date(2018,01,12), new Time(6,4,2), "Sample Bomboclaat", "asdasdas Description", 6.7f, new Date(2023,12,28), false, new Date(2025,1,28)));
+		workService.setAccount(4, 1);
+
+		workRepo.save(new Work(new Date(2022,01,15), new Time(1,44,1), "Kalashnikov", "asdasdas Description", 1.5f, new Date(2025,12,28), true, new Date(2025,1,28)));
+		workService.setAccount(5, 2);
 
 		catRepo.save(new Category("Science"));
 		catRepo.save(new Category("Math"));
@@ -68,5 +85,11 @@ public class BackendApplication implements CommandLineRunner {
 
 		workService.addWorkCategory(2, 3);
 		workService.addWorkCategory(2, 4);
+
+		Account account = accountService.getAccountByUsername("Benedict");
+
+		if(account != null) {
+			logger.info("Username (u): "  + account.getUsername());
+		}
 	}
 }

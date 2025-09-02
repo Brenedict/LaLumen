@@ -38,4 +38,18 @@ public class AccountService {
         repository.deleteById(id);
     }
 
+    public Account getAccountByUsername(String username) {
+        username = username.stripTrailing();
+        
+        try {
+
+            Account account = repository.findByUsername(username);
+
+            return account;
+        } catch(Exception e) {
+            throw new RuntimeException("Account not found");
+        }
+
+
+    }
 }

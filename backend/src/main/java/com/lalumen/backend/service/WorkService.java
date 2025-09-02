@@ -73,4 +73,14 @@ public class WorkService {
     public void deleteWork(int id) {
         repository.deleteById(id);
     }
+
+    public List<Work> getWorkByAccountId(int id) {
+        List<Work> works = repository.findByAccountId(id);
+
+        if(works.isEmpty()) {
+            throw new RuntimeException("No works exist for accountId " + id);
+        }
+
+        return works;
+    }
 }

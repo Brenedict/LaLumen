@@ -1,16 +1,14 @@
 import { useState } from 'react'
 import { Routes, Route, Link } from 'react-router-dom'
-import './App.css'
 
-import Home from './components/home'
+import Home from './components/Home'
 import Records from './components/Records'
+import Navbar from './components/Navbar'
 
 function App() {
   return (
     <>
-      <Link to = "/home">Home</Link>
-      <br />
-      <Link to = "/records">Records</Link>
+      <Navbar></Navbar>
       <Routes>
         <Route path='/home' element = {<Home/>} />
         <Route path='/records' element = {<Records/>} />

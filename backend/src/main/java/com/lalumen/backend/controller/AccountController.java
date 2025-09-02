@@ -1,6 +1,7 @@
 package com.lalumen.backend.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lalumen.backend.entity.Account;
+import com.lalumen.backend.entity.AccountResponseDTO;
+import com.lalumen.backend.entity.LoginRequestDTO;
 import com.lalumen.backend.service.AccountService;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -58,6 +61,15 @@ public class AccountController {
     public ResponseEntity<Void> deleteAccount(@PathVariable int id) {
         service.deleteAccount(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/auth")
+    public ResponseEntity<AccountResponseDTO> handleLoginRequest(@RequestBody LoginRequestDTO credentials) {
+        Account account = service.getAccountByUsername(credentials.username); 
+
+        AccountResponseDTO response = new AccountResponseDTO(account.getAccountId(), account.getUsername());
+
+        return ResponseEntity.ok(response);
     }
 
 }

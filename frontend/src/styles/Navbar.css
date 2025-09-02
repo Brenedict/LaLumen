@@ -1,0 +1,17 @@
+* {
+    text-decoration: none;
+    color: red;
+}
+
+.nav-container {
+    
+}
+
+.nav-links {
+    display: flex;
+    background-color: black;
+    gap: 3em;
+    justify-content: center;
+    border-radius: 20px;
+    padding: 2em;
+}
