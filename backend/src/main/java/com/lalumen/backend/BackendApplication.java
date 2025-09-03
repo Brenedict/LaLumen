@@ -49,9 +49,9 @@ public class BackendApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String ... args) {
-		accRepo.save(new Account("Benedict", "JAmboliath"));
-		accRepo.save(new Account("Cactus", "Bomboclaat"));
-		accRepo.save(new Account("Shrimp", "HelloKalibutan"));
+		accountService.tempRegisterAccount("Benedict", "Benedict123");
+		accountService.tempRegisterAccount("Cactus", "Cactus123");
+		accountService.tempRegisterAccount("Shrimp", "Shrimp123");
 
 		workRepo.save(new Work(new Date(2025,07,28), new Time(8,16,27), "Title 1 Acc 1", "Sample Description 1", 4.5f, new Date(2025,07,28), false, new Date(2025,07,28)));
 		workService.setAccount(1, 2);
@@ -86,10 +86,8 @@ public class BackendApplication implements CommandLineRunner {
 		workService.addWorkCategory(2, 3);
 		workService.addWorkCategory(2, 4);
 
-		Account account = accountService.getAccountByUsername("Benedict");
-
-		if(account != null) {
-			logger.info("Username (u): "  + account.getUsername());
-		}
+		
+		// logger.info("Benedict (u): "  + accountService.isUsernameCorrect("Benedicts"));
+		
 	}
 }

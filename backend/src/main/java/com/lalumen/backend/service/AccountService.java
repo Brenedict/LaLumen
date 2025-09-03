@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lalumen.backend.entity.Account;
+import com.lalumen.backend.entity.AccountResponseDTO;
+import com.lalumen.backend.entity.LoginRequestDTO;
 import com.lalumen.backend.exception.AccountNotFoundException;
 import com.lalumen.backend.repository.AccountRepository;
 
@@ -38,18 +40,42 @@ public class AccountService {
         repository.deleteById(id);
     }
 
+    // Fix this?
     public Account getAccountByUsername(String username) {
         username = username.stripTrailing();
         
         try {
-
             Account account = repository.findByUsername(username);
 
             return account;
         } catch(Exception e) {
             throw new RuntimeException("Account not found");
         }
+    }
 
+    public boolean isPasswordCorrect(String rawPassword, String encodedPassword) {
+        return PasswordUtil.passwordMatches(rawPassword, encodedPassword);
+    }
 
+    public AccountResponseDTO handleLogin(LoginRequestDTO credentials) {
+        Account accountChecking = getAccountByUsername(credentials.getUsername());
+
+        if(accountChecking == null) {
+            throw new RuntimeException("Account not found");
+        }
+
+        if(!isPasswordCorrect(credentials.getPassword(), accountChecking.getPasswordHash())) {
+            throw new RuntimeException("Incorrect password");
+        }
+        
+        return new AccountResponseDTO(accountChecking.getAccountId(), accountChecking.getUsername());
+    }
+
+    public void tempRegisterAccount(String username, String rawPassword) {
+        String encodedPassword = PasswordUtil.hashPassword(rawPassword);
+
+        Account newAccount = new Account(username, encodedPassword);
+
+        postAccount(newAccount);
     }
 }

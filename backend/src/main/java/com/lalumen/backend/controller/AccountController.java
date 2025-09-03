@@ -1,9 +1,7 @@
 package com.lalumen.backend.controller;
 
 import java.util.List;
-import java.util.Optional;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
@@ -65,9 +62,7 @@ public class AccountController {
 
     @PostMapping("/auth")
     public ResponseEntity<AccountResponseDTO> handleLoginRequest(@RequestBody LoginRequestDTO credentials) {
-        Account account = service.getAccountByUsername(credentials.username); 
-
-        AccountResponseDTO response = new AccountResponseDTO(account.getAccountId(), account.getUsername());
+        AccountResponseDTO response = service.handleLogin(credentials);
 
         return ResponseEntity.ok(response);
     }
