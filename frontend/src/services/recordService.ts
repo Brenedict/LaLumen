@@ -12,8 +12,8 @@ export interface WorkInterface {
     productivityRating: number,
     lastModifiedAt: string,
     deletedAt: string | null,
+    isDeleted: boolean 
     workCategories: WorkCategoryInterface[],
-    deleted: boolean
 }
 
 export const fetchRecords = async (accountId: number): Promise<WorkInterface[]> => {

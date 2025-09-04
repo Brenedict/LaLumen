@@ -6,8 +6,11 @@ Currently the project uses **Java 21 | Spring Boot 3.5.5** and **React 19.1.1**
 
 ---
 ### Entity-Relationship Diagram (v2)
-![Entity-Relationship Diagram](./figures/diagram.png)
+![Entity-Relationship Diagram](./figures/ERDiagram.png)
 
 ---
 ### Wireframe Draft
 ![Wireframe](./figures/wireframe1.PNG)
+
+### Draft Sequence Diagram: Operations
+![Sequence Diagram](./figures/SequenceDiagram.svg)

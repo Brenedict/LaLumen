@@ -1,0 +1,136 @@
+@startuml
+actor User as user
+participant Frontend as fe
+participant Backend as be
+database Database as db
+
+== Auto Login ==
+fe --> fe: Check if user info exists in localStorage
+
+alt User info exists
+    fe -> be: GET request (id)
+    be -> db: Retrieve all records correponding to user id
+    be -> fe: Return work and category records
+    
+    note right fe
+        mount to respective contexts
+    end note
+    
+    fe --> user: Display all record informations
+else No user info
+    fe --> user: Display login required message
+end
+
+== Login Phase ==
+user -> fe: Enters credentials (username, password)
+fe -> be: POST / login request (username, password)
+be -> db: Validate credentials (username, password)
+
+alt Successful login
+    be -> fe: Return user info (id, username)
+    
+    note right fe
+        store user info to local storage
+    end note
+    
+    be -> fe: Return work and category records
+    
+    note right fe
+        mount to respective contexts
+    end note
+    
+    fe -> user: Display all record informations
+
+else Failed login
+    be -> fe: Return error: failed login
+    fe -> user: Display error: failed login
+end
+
+== User Operations ==
+alt Create New Category 
+    user -> fe: Create category
+    
+    note right fe
+        check for duplicates
+    end note
+    
+    fe -> be: POST request (category entity)
+    be -> db: Save new category entity
+    be -> fe: Return category entity
+    
+    note right fe
+        reload categories context
+    end note
+    
+    fe -> user: Reflect new category
+end
+
+alt Add New Record
+    user -> fe: Adds new record
+    fe -> be: POST request (work entity)
+    be -> db: Save record (work entity)
+    be -> fe: Add work entity to context
+    
+    note right fe
+        reload work context
+    end note
+    
+    fe -> user: Reflect newly added record
+end
+
+alt Edit Record
+    user -> fe: Edit record
+    fe -> be: PUT request (work entity)
+    
+    note right fe
+        include workId, and update edit date
+    end note
+    
+    be -> db: Save edited work entity
+    be -> fe: Return edited work entity
+    
+    note right fe
+        reload Work context
+    end note
+    
+    fe -> user: Reflect newly edited record
+end
+
+alt Delete Record
+    user -> fe: Delete record
+    fe -> be: DELETE request (work entity)
+    
+    note right fe
+        include workId, and update 
+        isDeleted boolean
+    end note
+    
+    be -> db: Delete work entity
+    be -> fe: Return deletion message
+    
+    note right fe
+        remove record from Work context
+    end note
+    
+    fe -> user: Display deletion message
+end
+
+alt Delete Category
+    user -> fe: Delete category
+    fe -> be: DELETE request (category entity)
+    
+    note right fe
+        include categoryId
+    end note
+    
+    be -> db: Delete category entity
+    be -> fe: Return deletion message
+    
+    note right fe
+        remove category from Categories context
+    end note
+    
+    fe -> user: Display deletion message
+end
+
+@enduml
