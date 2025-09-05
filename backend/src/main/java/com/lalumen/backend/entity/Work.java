@@ -27,6 +27,8 @@ public class Work {
 
     private Time timeStart;
 
+    private Time duration;
+
     private String logTitle;
 
     private String logDescription;
@@ -49,9 +51,10 @@ public class Work {
     @JsonManagedReference
     private List<Category> workCategories = new ArrayList<>();
 
-    public Work(Date workDate, Time timeStart, String logTitle, String logDescription, float productivityRating, Date lastModifiedAt, boolean isDeleted, Date deletedAt) {
+    public Work(Date workDate, Time timeStart, Time duration, String logTitle, String logDescription, float productivityRating, Date lastModifiedAt, boolean isDeleted, Date deletedAt) {
         this.workDate = workDate;
         this.timeStart = timeStart;
+        this.duration = duration;
         this.logTitle = logTitle;
         this.logDescription = logDescription;
         this.productivityRating = productivityRating;

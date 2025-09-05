@@ -4,7 +4,7 @@ export interface LoginRequestInterface {
 }
 
 export interface AccountResponseInterface {
-    id: number,
+    accountId: number,
     username: string
 }
 

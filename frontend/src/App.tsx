@@ -7,21 +7,24 @@ import Home from './components/Home'
 import Records from './components/Records'
 import Journal from './components/Journal'
 import Settings from './components/Settings'
+import Login from './components/Login'
 
-// API Services Related
-import { type LoginRequestInterface, type AccountResponseInterface, handleLogin } from './services/accountService'
-import { type WorkInterface, type WorkCategoryInterface, fetchRecords } from './services/recordService'
+// Context Providing Components
+import WorkContextProvider from './contexts/WorkContextProvider'
 
 function App() {
   return (
     <>
-    <Navbar/>
-    <Routes>
-      <Route path='/home' element = {<Home/>} />
-      <Route path='/records' element = {<Records/>} />
-      <Route path='/journal' element = {<Journal/>} />
-      <Route path='/settings' element = {<Settings/>} />
-    </Routes>
+      <Navbar/>
+      <WorkContextProvider>
+        <Login />
+        <Routes>
+          <Route path='/home' element = {<Home/>} />
+          <Route path='/records' element = {<Records/>} />
+          <Route path='/journal' element = {<Journal/>} />
+          <Route path='/settings' element = {<Settings/>} />
+        </Routes>
+      </WorkContextProvider>
     </>
   )
 }

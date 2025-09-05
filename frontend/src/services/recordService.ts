@@ -7,6 +7,7 @@ export interface WorkInterface {
     workId: number,
     workDate: string,
     timeStart: string,
+    duration: string,
     logTitle: string,
     logDescription: string,
     productivityRating: number,
@@ -16,7 +17,14 @@ export interface WorkInterface {
     workCategories: WorkCategoryInterface[],
 }
 
-export const fetchRecords = async (accountId: number): Promise<WorkInterface[]> => {
+export interface ErrorResponseInterface {
+    timestamp: string,
+    statusCode: number,
+    path: string,
+    message: string
+}
+
+export const fetchWorkRecords = async (accountId: number): Promise<WorkInterface[]> => {
     const URL = `http://127.0.0.1:8080/work/${accountId}/account-id`;
     const rawResponse =  await fetch(URL, 
         {

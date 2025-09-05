@@ -53,19 +53,19 @@ public class BackendApplication implements CommandLineRunner {
 		accountService.tempRegisterAccount("Cactus", "Cactus123");
 		accountService.tempRegisterAccount("Shrimp", "Shrimp123");
 
-		workRepo.save(new Work(new Date(2025,07,28), new Time(8,16,27), "Title 1 Acc 1", "Sample Description 1", 4.5f, new Date(2025,07,28), false, new Date(2025,07,28)));
+		workRepo.save(new Work(new Date(2025,07,28), new Time(12,32,27), new Time(8,16,27), "Title 1 Acc 1", "Sample Description 1", 4.5f, new Date(2025,07,28), false, new Date(2025,07,28)));
 		workService.setAccount(1, 2);
 
-		workRepo.save(new Work(new Date(2023,01,12), new Time(4,4,4), "Sample SADASD", "asdasdas Description", 9.5f, new Date(2025,12,28), false, new Date(2025,1,28)));
+		workRepo.save(new Work(new Date(2023,01,12), new Time(13,56,4), new Time(4,4,4), "Sample SADASD", "asdasdas Description", 9.5f, new Date(2025,12,28), false, new Date(2025,1,28)));
 		workService.setAccount(2, 2);
 
-		workRepo.save(new Work(new Date(2025,07,28), new Time(8,16,27), "Title 2 Acc 1", "Sample Description 2", 4.6f, new Date(2025,07,28), true, new Date(2025,07,28)));
-		workService.setAccount(3, 1);
+		workRepo.save(new Work(new Date(2025,07,28), new Time(23,00,27), new Time(8,16,27), "Title 2 Acc 1", "Sample Description 2", 4.6f, new Date(2025,07,28), true, new Date(2025,07,28)));
+		workService.setAccount(3, 3);
 
-		workRepo.save(new Work(new Date(2018,01,12), new Time(6,4,2), "Sample Bomboclaat", "asdasdas Description", 6.7f, new Date(2023,12,28), false, new Date(2025,1,28)));
-		workService.setAccount(4, 1);
+		workRepo.save(new Work(new Date(2018,01,12), new Time(1,00,2), new Time(6,4,2), "Sample Bomboclaat", "asdasdas Description", 6.7f, new Date(2023,12,28), false, new Date(2025,1,28)));
+		workService.setAccount(4, 3);
 
-		workRepo.save(new Work(new Date(2022,01,15), new Time(1,44,1), "Kalashnikov", "asdasdas Description", 1.5f, new Date(2025,12,28), true, new Date(2025,1,28)));
+		workRepo.save(new Work(new Date(2022,01,15), new Time(2,44,1), new Time(1,44,1), "Kalashnikov", "asdasdas Description", 1.5f, new Date(2025,12,28), true, new Date(2025,1,28)));
 		workService.setAccount(5, 2);
 
 		catRepo.save(new Category("Science"));
@@ -86,7 +86,7 @@ public class BackendApplication implements CommandLineRunner {
 		workService.addWorkCategory(2, 3);
 		workService.addWorkCategory(2, 4);
 
-		
+
 		// logger.info("Benedict (u): "  + accountService.isUsernameCorrect("Benedicts"));
 		
 	}

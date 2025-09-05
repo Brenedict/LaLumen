@@ -6,11 +6,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AccountResponseDTO {
-    private int id;
+    private int accountId;
     private String username;
 
-    public AccountResponseDTO(int id, String username) {
-        this.id = id;
+    public AccountResponseDTO(int accountId, String username) {
+        this.accountId = accountId;
         this.username = username;
     }
 }
