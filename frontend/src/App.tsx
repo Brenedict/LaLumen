@@ -10,21 +10,29 @@ import Settings from './components/Settings'
 import Login from './components/Login'
 
 // Context Providing Components
-import WorkContextProvider from './contexts/WorkContextProvider'
+import WorkContextProvider, { useWorkContext } from './contexts/WorkContextProvider'
 
 function App() {
+  const {
+    accountInfo, setAccountInfo, 
+    accountWorkRecords, setAccountWorkRecords,
+    isLogin, setIsLogin
+  } = useWorkContext();
+
   return (
     <>
       <Navbar/>
-      <WorkContextProvider>
-        <Login />
-        <Routes>
-          <Route path='/home' element = {<Home/>} />
-          <Route path='/records' element = {<Records/>} />
-          <Route path='/journal' element = {<Journal/>} />
-          <Route path='/settings' element = {<Settings/>} />
-        </Routes>
-      </WorkContextProvider>
+      {
+        isLogin === false ? (<Login />) : (
+          <h2>Welcome {accountInfo?.username}</h2>
+        )
+      }
+      <Routes>
+        <Route path='/home' element = {<Home/>} />
+        <Route path='/records' element = {<Records/>} />
+        <Route path='/journal' element = {<Journal/>} />
+        <Route path='/settings' element = {<Settings/>} />
+      </Routes>
     </>
   )
 }

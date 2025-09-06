@@ -2,28 +2,34 @@ import { useState } from "react";
 
 import { handleLogin, type LoginRequestInterface, type AccountResponseInterface } from "../services/accountService";
 import { useWorkContext } from "../contexts/WorkContextProvider";
-import { fetchWorkRecords, type ErrorResponseInterface, type WorkInterface } from "../services/recordService";
+import { fetchWorkRecords, type WorkInterface } from "../services/recordService";
 function Login() {
-    const {accountWorkRecords, setAccountWorkRecords} = useWorkContext();
+    const {
+        accountInfo, setAccountInfo, 
+        accountWorkRecords, setAccountWorkRecords,
+        isLogin, setIsLogin
+    } = useWorkContext();
     
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [accountInfo, setAccountInfo] = useState<AccountResponseInterface>();
-    const [isLogin, setIsLogin] = useState(false);
+    const [loginMessage, setLoginMessage] = useState("") 
     
     const login = async () => {
-        console.log("Called")
-        const credentials: LoginRequestInterface = {username, password}
-        
-        const accountResponse: AccountResponseInterface = await handleLogin(credentials);
-
-        // Add checking if login is successfull
-        // This if statement doesn't work because response in this case is an error response: timestamp, endpoint url
-
-        if(accountResponse) {
+        try {
+            const credentials: LoginRequestInterface = {username, password}
+            
+            const accountResponse: AccountResponseInterface = await handleLogin(credentials);
+                        
             setAccountInfo(accountResponse);
-            setIsLogin(true);
             updateWorkContext(accountResponse.accountId);
+            setIsLogin(true);
+
+            // Temporary
+            setLoginMessage("");
+        }
+        catch (error: any) {
+            console.error(error.message);
+            setLoginMessage(error.message);
         }
     } 
 
@@ -34,6 +40,11 @@ function Login() {
 
     return(
         <>
+            {
+                // Temporary: Testing purposes
+                loginMessage && !isLogin &&<h2>{loginMessage}</h2>
+            }
+            
             <div>
                 <input type="text" placeholder="enter username" onChange={(e) => setUsername(e.target.value)}/>
                 <input type="password" placeholder="enter password" onChange={(e) => setPassword(e.target.value)}/>

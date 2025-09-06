@@ -4,10 +4,15 @@ import { BrowserRouter } from 'react-router-dom'
 
 import App from './App.tsx'
 
+// Context Providing Components
+import WorkContextProvider from './contexts/WorkContextProvider'
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <WorkContextProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </WorkContextProvider>
   </StrictMode>
 )

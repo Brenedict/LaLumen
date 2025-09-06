@@ -8,12 +8,13 @@ function Records() {
     return (
         <div>
             <ul>
-                {
-                    // Add ternary condition for checking if login was a success
-                    accountWorkRecords.map((work) => (
-                        <li>{JSON.stringify(work)}</li>
+                {accountWorkRecords.length === 0 ? (
+                    <li>Nothing to see here...</li>
+                ) : (
+                    accountWorkRecords.map((work, idx) => (
+                        <li key={idx}>{JSON.stringify(work)}</li>
                     ))
-                }
+                )}
             </ul>
         </div>
     );

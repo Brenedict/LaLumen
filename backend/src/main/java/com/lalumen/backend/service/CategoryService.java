@@ -55,4 +55,10 @@ public class CategoryService {
         category.setAccount(tempAccount.get());
         repository.save(category);
     }
+
+    public List<Category> getCategoryByAccountId(int id) {
+        List<Category> categories = repository.findByAccountId(id);
+
+        return categories;
+    }
 }

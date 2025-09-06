@@ -71,6 +71,12 @@ public class AccountService {
         return new AccountResponseDTO(accountChecking.getAccountId(), accountChecking.getUsername());
     }
 
+    public AccountResponseDTO handleAutoLogin(int accountId) {
+        Account account = getAccountById(accountId);
+
+        return new AccountResponseDTO(accountId, account.getUsername());
+    }
+
     public void tempRegisterAccount(String username, String rawPassword) {
         String encodedPassword = PasswordUtil.hashPassword(rawPassword);
 

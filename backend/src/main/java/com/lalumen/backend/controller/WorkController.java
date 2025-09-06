@@ -37,6 +37,11 @@ public class WorkController {
     public Work getWorkById(@PathVariable int id) {
         return service.getWorkById(id);
     }
+
+    @GetMapping("/{id}/account-id")
+    public ResponseEntity<List<Work>> getWorkByAccountId(@PathVariable int id) {
+        return ResponseEntity.ok(service.getWorkByAccountId(id));
+    }
     
     @PostMapping
     public Work postWork(@RequestBody Work work) {
@@ -48,11 +53,5 @@ public class WorkController {
         service.deleteWork(id);
         return ResponseEntity.noContent().build();
     }
-
-    @RequestMapping("/{id}/account-id")
-    public ResponseEntity<List<Work>> requestMethodName(@PathVariable int id) {
-        return ResponseEntity.ok(service.getWorkByAccountId(id));
-    }
-    
     
 }

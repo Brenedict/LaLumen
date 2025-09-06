@@ -1,11 +1,17 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import React, { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 
 // From API Services
-import { type WorkInterface } from "../services/recordService";
-import { fetchWorkRecords } from "../services/recordService";
-import type { AccountResponseInterface } from "../services/accountService";
+import { type WorkInterface, type WorkCategoryInterface } from "../services/recordService";
+import { fetchWorkRecords, fetchWorkCategories } from "../services/recordService";
+import { handleAutoLogin, handleLogin, type AccountResponseInterface } from "../services/accountService";
 
 interface WorkContextInterface {
+    isLogin: boolean;
+    setIsLogin: React.Dispatch<React.SetStateAction<boolean>>
+    accountInfo: AccountResponseInterface | undefined;
+    setAccountInfo: React.Dispatch<React.SetStateAction<AccountResponseInterface | undefined>>;
+    accountWorkCategories: WorkCategoryInterface[];
+    setAccountWorkCategories: React.Dispatch<React.SetStateAction<WorkCategoryInterface[]>>
     accountWorkRecords: WorkInterface[];
     setAccountWorkRecords: React.Dispatch<React.SetStateAction<WorkInterface[]>>
 }
@@ -24,16 +30,31 @@ export const useWorkContext = () => {
 }
 
 function WorkContextProvider({ children }: { children: ReactNode}) {
+    const [isLogin, setIsLogin] = useState<boolean>(false);
+    const [accountInfo, setAccountInfo] = useState<AccountResponseInterface | undefined>();
     const [accountWorkRecords, setAccountWorkRecords] = useState<WorkInterface[]>([]);
+    const [accountWorkCategories, setAccountWorkCategories] = useState<WorkCategoryInterface[]>([]);
     
     const persistingId = localStorage.getItem("accountId");
 
     if(persistingId) {   
         useEffect(() => {
             const fetchWorks = async (accountId: number) => {
-                const workRecordsResponse: WorkInterface[] = await fetchWorkRecords(accountId);
-                
-                setAccountWorkRecords(workRecordsResponse);
+                try {
+                    const accountInfo: AccountResponseInterface = await handleAutoLogin(accountId);
+                    
+                    console.log(accountInfo);
+                    
+                    const workRecordsResponse: WorkInterface[] = await fetchWorkRecords(accountId);
+                    const workCategoriesResponse: WorkCategoryInterface[] = await fetchWorkCategories(accountId);
+                    
+                    setAccountWorkRecords(workRecordsResponse);
+                    setAccountWorkCategories(workCategoriesResponse);
+                    setIsLogin(true);
+                }
+                catch (error: any) {
+                    console.error(error.message)
+                }
             }
             
             fetchWorks(Number.parseInt(persistingId));
@@ -42,8 +63,7 @@ function WorkContextProvider({ children }: { children: ReactNode}) {
         
     return (
         <>
-            <h1>Account Id: {persistingId}</h1>
-            <WorkContext.Provider value={{accountWorkRecords, setAccountWorkRecords}}>
+            <WorkContext.Provider value={{isLogin, setIsLogin, accountInfo, setAccountInfo, accountWorkRecords, setAccountWorkRecords, accountWorkCategories, setAccountWorkCategories}}>
                 {children}
             </WorkContext.Provider>
         </>

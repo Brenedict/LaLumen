@@ -67,4 +67,11 @@ public class AccountController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/auth/{id}")
+    public ResponseEntity<AccountResponseDTO> handleAutoLoginRequest(@PathVariable("id") int accountId) {
+        AccountResponseDTO response = service.handleAutoLogin(accountId);
+
+        return ResponseEntity.ok(response);
+    }
+
 }

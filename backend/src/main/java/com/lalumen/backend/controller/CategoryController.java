@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/category")
+@CrossOrigin("*")
 public class CategoryController {
     @Autowired
     CategoryService service;
@@ -24,6 +25,11 @@ public class CategoryController {
     @GetMapping("/{id}")
     public Category getCategoryById(@PathVariable int id) {
         return service.getCategoryById(id);
+    }
+
+    @GetMapping("/{id}/account-id")
+    public List<Category> getCategoryByAccountId(@PathVariable int id) {
+        return service.getCategoryByAccountId(id);
     }
 
     @PostMapping

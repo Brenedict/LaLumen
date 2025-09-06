@@ -20,7 +20,32 @@ export const handleLogin = async (credentials: LoginRequestInterface): Promise<A
             body: JSON.stringify(credentials)
         });
         
-    // Insert error checking ^^
+    if(!rawResponse.ok) {
+        const errorData = await rawResponse.json();
+        throw new Error(errorData.message);
+    }
+
+    const result = await rawResponse.json()
+
+    return result;
+}
+
+export const handleAutoLogin = async (accountId: number): Promise<AccountResponseInterface> => {
+    const URL = `http://127.0.0.1:8080/account/auth/${accountId}`;
+    const rawResponse = await fetch(URL, 
+        {
+            method: "POST", 
+            headers: { 
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        });
+
+    if (!rawResponse.ok) {
+        const errorData = await rawResponse.json();
+        throw new Error(errorData.message);   
+    }
+        
     const result = await rawResponse.json()
 
     return result;
