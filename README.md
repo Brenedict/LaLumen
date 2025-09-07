@@ -11,9 +11,11 @@ Currently the project uses **Java 21 | Spring Boot 3.5.5** and **React 19.1.1**
 ---
 ### Wireframe Draft
 **1. Records Tab**
+
 ![Wireframe-Records-Tab](./figures/wireframe2-1.PNG)
 
 **2. Add New Record Pop Up**
+
 ![Wireframe-Add-Record](./figures/wireframe2-2.PNG)
 
 ### Draft Sequence Diagram: Operations
