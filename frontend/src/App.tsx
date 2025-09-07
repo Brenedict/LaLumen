@@ -1,6 +1,8 @@
 import { useEffect, useState, useRef} from 'react'
 import { Routes, Route, Link } from 'react-router-dom'
 
+import styles from "./styles/App.module.css"
+
 // Components
 import Navbar from './components/Navbar'
 import Home from './components/Home'
@@ -20,20 +22,19 @@ function App() {
   } = useWorkContext();
 
   return (
-    <>
+    <div className={styles.appContainer}>
       <Navbar/>
       {
         isLogin === false ? (<Login />) : (
-          <h2>Welcome {accountInfo?.username}</h2>
+          <Routes>
+            <Route path='/home' element = {<Home/>} />
+            <Route path='/records' element = {<Records/>} />
+            <Route path='/journal' element = {<Journal/>} />
+            <Route path='/settings' element = {<Settings/>} />
+          </Routes>    
         )
       }
-      <Routes>
-        <Route path='/home' element = {<Home/>} />
-        <Route path='/records' element = {<Records/>} />
-        <Route path='/journal' element = {<Journal/>} />
-        <Route path='/settings' element = {<Settings/>} />
-      </Routes>
-    </>
+      </div>
   )
 }
 

@@ -1,0 +1,29 @@
+:root {
+    --black: #000;
+    --white: #FFF;
+    --black-shade: #080808;
+    --secondary: #161616;
+}
+
+.navContainer {
+    position: fixed;
+    bottom: 0%;
+    left: calc(50% - 35rem/2);
+    min-width: 35rem;
+    /* margin-bottom: ; */
+}
+
+.navLinks {
+    display: flex;
+    gap: 3em;
+    justify-content: center;
+    border-radius: 20px 20px 0 0;
+    padding: 2em;
+    padding-bottom: 1em;
+    background-color: var(--secondary);
+}
+
+.navLinks a {
+    text-decoration: none;
+    color: var(--white);
+}
