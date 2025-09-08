@@ -1,16 +1,18 @@
 :root {
     --black: #000;
     --white: #FFF;
-    --black-shade: #080808;
-    --secondary: #161616;
+    --dark-gray: #161616;
+    --gray: #797979;
+    --pastel-turquoise: #b6e2d3;
+    --turquoise: #50e3c2;
 }
+
 
 .navContainer {
     position: fixed;
     bottom: 0%;
     left: calc(50% - 35rem/2);
     min-width: 35rem;
-    /* margin-bottom: ; */
 }
 
 .navLinks {
@@ -20,7 +22,8 @@
     border-radius: 20px 20px 0 0;
     padding: 2em;
     padding-bottom: 1em;
-    background-color: var(--secondary);
+    background-color: var(--dark-gray);
+    border: 1px solid var(--gray);
 }
 
 .navLinks a {

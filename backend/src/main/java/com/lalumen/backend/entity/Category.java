@@ -26,6 +26,8 @@ public class Category {
 
     private String categoryName;
 
+    private String categoryColor;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "accountId", referencedColumnName = "accountId")
     @JsonIgnore
@@ -37,8 +39,9 @@ public class Category {
 
     // Add account constructor
 
-    public Category(String categoryName) {
+    public Category(String categoryName, String categoryColor) {
         this.categoryName = categoryName;
+        this.categoryColor = categoryColor;
     }
 
     @PreRemove

@@ -35,31 +35,31 @@ function WorkContextProvider({ children }: { children: ReactNode}) {
     const [accountWorkRecords, setAccountWorkRecords] = useState<WorkInterface[]>([]);
     const [accountWorkCategories, setAccountWorkCategories] = useState<WorkCategoryInterface[]>([]);
     
-    const persistingId = localStorage.getItem("accountId");
-
-    if(persistingId) {   
-        useEffect(() => {
-            const fetchWorks = async (accountId: number) => {
-                try {
-                    const accountInfo: AccountResponseInterface = await handleAutoLogin(accountId);
-                    
-                    console.log(accountInfo);
-                    
-                    const workRecordsResponse: WorkInterface[] = await fetchWorkRecords(accountId);
-                    const workCategoriesResponse: WorkCategoryInterface[] = await fetchWorkCategories(accountId);
-                    
-                    setAccountWorkRecords(workRecordsResponse);
-                    setAccountWorkCategories(workCategoriesResponse);
-                    setIsLogin(true);
-                }
-                catch (error: any) {
-                    console.error(error.message)
-                }
+    
+    useEffect(() => {
+        const persistingId = localStorage.getItem("accountId");
+        if(!persistingId) {
+            return;
+        }
+        
+        const fetchWorks = async (accountId: number) => {
+            try {
+                const accountInfo: AccountResponseInterface = await handleAutoLogin(accountId);
+                
+                const workRecordsResponse: WorkInterface[] = await fetchWorkRecords(accountId);
+                const workCategoriesResponse: WorkCategoryInterface[] = await fetchWorkCategories(accountId);
+                
+                setAccountWorkRecords(workRecordsResponse);
+                setAccountWorkCategories(workCategoriesResponse);
+                setIsLogin(true);
             }
-            
-            fetchWorks(Number.parseInt(persistingId));
-        }, [])
-    }
+            catch (error: any) {
+                console.error(error.message)
+            }
+        }
+        
+        fetchWorks(Number.parseInt(persistingId));
+    }, [])
         
     return (
         <>

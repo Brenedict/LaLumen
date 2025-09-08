@@ -1,6 +1,7 @@
 export interface WorkCategoryInterface {
     categoryId: number,
     categoryName: string
+    categoryColor: string;
 }
 
 export interface WorkInterface {

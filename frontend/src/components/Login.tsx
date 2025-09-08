@@ -20,12 +20,15 @@ function Login() {
             
             const accountResponse: AccountResponseInterface = await handleLogin(credentials);
                         
+            localStorage.setItem("accountId", accountResponse.accountId.toString());
+
             setAccountInfo(accountResponse);
             updateWorkContext(accountResponse.accountId);
             setIsLogin(true);
 
             // Temporary
             setLoginMessage("");
+            
         }
         catch (error: any) {
             console.error(error.message);
@@ -40,11 +43,6 @@ function Login() {
 
     return(
         <>
-            {
-                // Temporary: Testing purposes
-                loginMessage && !isLogin &&<h2>{loginMessage}</h2>
-            }
-            
             <div>
                 <input type="text" placeholder="enter username" onChange={(e) => setUsername(e.target.value)}/>
                 <input type="password" placeholder="enter password" onChange={(e) => setPassword(e.target.value)}/>

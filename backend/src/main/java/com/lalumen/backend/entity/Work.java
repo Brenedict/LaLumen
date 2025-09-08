@@ -2,6 +2,9 @@ package com.lalumen.backend.entity;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,24 +25,26 @@ public class Work {
     @Id
     @GeneratedValue
     private int workId;
+    
+    private LocalDate workDate;
 
-    private Date workDate;
+    private LocalTime timeStart;
 
-    private Time timeStart;
+    private Duration duration;
 
-    private Time duration;
-
+    @Column(length = 150)
     private String logTitle;
 
+    @Column(length = 1000)
     private String logDescription;
 
     private float productivityRating;
 
-    private Date lastModifiedAt;
+    private LocalDate lastModifiedAt;
 
     private boolean isDeleted;
 
-    private Date deletedAt;
+    private LocalDate deletedAt;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "accountId", referencedColumnName = "accountId")
@@ -51,7 +56,7 @@ public class Work {
     @JsonManagedReference
     private List<Category> workCategories = new ArrayList<>();
 
-    public Work(Date workDate, Time timeStart, Time duration, String logTitle, String logDescription, float productivityRating, Date lastModifiedAt, boolean isDeleted, Date deletedAt) {
+    public Work(LocalDate workDate, LocalTime timeStart, Duration duration, String logTitle, String logDescription, float productivityRating, LocalDate lastModifiedAt, boolean isDeleted, LocalDate deletedAt) {
         this.workDate = workDate;
         this.timeStart = timeStart;
         this.duration = duration;

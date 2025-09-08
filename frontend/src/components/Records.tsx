@@ -16,21 +16,45 @@ type WorkEntryProps = {
     workCategories: WorkCategoryInterface[]
 }
 
+function parseDate(date: string) {
+  return new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
+function parseTime(time: string) {
+  return new Date(`1970-01-01T${time}`).toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+  });
+}
+
+function parseDuration(duration: string) {
+    let durationFormat = duration.split("PT");
+
+    return durationFormat;
+}
+
 function WorkEntry(
     {   workDate, timeStart, duration, 
         logTitle, logDescription, productivityRating, 
         lastModifiedAt, workCategories}: WorkEntryProps
     ) {
+
     return (
         <div className={styles.entryContainer}>
-            <h4 className={styles.entryDateDetails}>{workDate} at {timeStart} {workDate === lastModifiedAt ? "" : "  |  Updated:" + lastModifiedAt}</h4>
-            <h2 className={styles.entryTitle}>{logTitle}</h2>
-            <p>{logDescription}</p>
+            <div className={styles.entryPrimaryDetailsContainer}>
+                <h4 className={styles.entryDateDetails}>{parseDate(workDate)} at {parseTime(timeStart)} {workDate === lastModifiedAt ? "" : "  |  Updated: " + parseDate(lastModifiedAt)}</h4>
+                <h2 className={styles.entryTitle}>{logTitle}</h2>
+                <p>{logDescription}</p>
+            </div>
 
             <div className={styles.entrySecondaryDetailsContainer}>
                 <div className={styles.entryDurationContainer}>
                     <p>Duration</p>
-                    <h3>{duration}</h3>
+                    <h3>{parseDuration(duration)}</h3>
                 </div>
                 <div className={styles.entryProductivityContainer}>
                     <p>Productivity</p>
@@ -38,16 +62,18 @@ function WorkEntry(
                 </div>
                 <div className={styles.entryGradeContainer}>
                     <p>Relative</p>
-                    <h3>temp</h3>
+                    <h3>Grade: 👍</h3>
                 </div>
             </div>
 
             <hr />
-            <p id={styles.workCategoriesText}>Work Categories:</p>
             <div className={styles.workCategoriesContainer}>
-                {workCategories.map((category) => (
-                    <p>{category.categoryName}</p>
-                ))}
+                <p id={styles.workCategoriesText}>Work Categories:</p>
+                <div className={styles.categoriesListingContainer}>
+                    {workCategories.map((category) => (
+                        <p style={{backgroundColor: category.categoryColor}}>{category.categoryName}</p>
+                    ))}
+                </div>
             </div>
         </div>
     )

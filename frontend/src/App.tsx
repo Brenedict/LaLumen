@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef} from 'react'
-import { Routes, Route, Link } from 'react-router-dom'
+import { Routes, Route, Link, Navigate } from 'react-router-dom'
 
 import styles from "./styles/App.module.css"
 
@@ -21,8 +21,19 @@ function App() {
     isLogin, setIsLogin
   } = useWorkContext();
 
+  const tempLogOff = () => {
+    localStorage.removeItem("accountId");
+    setIsLogin(false);
+  }
+
   return (
     <div className={styles.appContainer}>
+      {isLogin && <a onClick={tempLogOff}style={{
+        color: 'white',
+        textDecoration: 'underline',
+        cursor: 'pointer'
+        }}>Log Out</a>
+        }
       <Navbar/>
       {
         isLogin === false ? (<Login />) : (
@@ -31,6 +42,7 @@ function App() {
             <Route path='/records' element = {<Records/>} />
             <Route path='/journal' element = {<Journal/>} />
             <Route path='/settings' element = {<Settings/>} />
+            <Route path='*' element = {<Navigate to="home" replace />}/>
           </Routes>    
         )
       }

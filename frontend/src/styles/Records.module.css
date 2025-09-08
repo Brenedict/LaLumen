@@ -39,9 +39,12 @@ p {
 
 
 .recordsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
     background-color: var(--dark-gray);
     min-width: 720px;
-    max-width: 1020px;
+    max-width: 900px;
     margin: 0 auto;
     padding: 1em 2em;
     border: 3px solid var(--gray);
@@ -50,18 +53,30 @@ p {
     color: var(--white);
 }
 
+.recordsButtonsContainer {
+    display: flex;
+    gap: 1em;
+}
+
 .recordsEntriesContainer {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 1em;
 }
 
+.entryContainer hr {
+    border: 1px solid var(--gray);
+}
 
 /* Work Entry CSS */
 
 /* Typography */
 .entrySecondaryDetailsContainer p {
     color: var(--gray);
+}
+
+.entryPrimaryDetailsContainer p {
+    text-align: justify
 }
 
 #workCategoriesText {
@@ -71,7 +86,6 @@ p {
 .entryContainer {
     display: flex;
     flex-direction: column;
-    padding: 1em;
     background-color: var(--dark-gray);
     border: 2px solid var(--gray);
 }
@@ -84,11 +98,28 @@ p {
     color: var(--pastel-turquoise);
 }
 
+.entryPrimaryDetailsContainer, .entrySecondaryDetailsContainer, .workCategoriesContainer {
+    padding: .675em 1em;
+}
+
 .entrySecondaryDetailsContainer {
     display: flex;
     gap: 20px;
 }
 
 .workCategoriesContainer {
-    /* display: flex; */
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.categoriesListingContainer {
+    display: flex;
+    gap: 5px
+}
+
+.categoriesListingContainer p {
+    background-color: var(--gray);
+    padding: .5em 1em;
+    border-radius: 4px;
 }
